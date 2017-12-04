@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 37ffd8e05626f074e8455adebb71be03
-timeCreated: 1512372915
+guid: f58eea28e220bab48ae2c5c074db04ff
+timeCreated: 1512383002
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
@@ -15,7 +15,7 @@ ModelImporter:
     3300000: macarena
     4300000: macarena
     6400000: macarena
-    9500000: //RootNode
+    10800000: Hemi
   materials:
     importMaterials: 1
     materialName: 0
@@ -43,7 +43,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 2
     meshCompression: 0
     addColliders: 1
     importVisibility: 1
@@ -51,7 +51,7 @@ ModelImporter:
     importCameras: 1
     importLights: 1
     swapUVChannels: 0
-    generateSecondaryUV: 1
+    generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
@@ -63,7 +63,7 @@ ModelImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 1
+    normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
   importAnimation: 1
@@ -85,7 +85,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

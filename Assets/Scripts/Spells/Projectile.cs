@@ -34,6 +34,7 @@ public class Projectile : MonoBehaviour {
 
     public void Fire(Vector3 direction)
     {
+        rb.isKinematic = false;
         rb.AddForce(direction * speed, ForceMode.Force);
         GetComponent<Collider>().enabled = true;
     }

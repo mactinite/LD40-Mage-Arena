@@ -29,6 +29,8 @@ public class SpellController : MonoBehaviour {
     public delegate void UpdateUI(float newHeatLevel);
     public UpdateUI OnHeatChange = delegate { };
 
+    public LayerMask raycastMask;
+
     // init
     private void Awake()
     {
@@ -67,15 +69,17 @@ public class SpellController : MonoBehaviour {
         centerScreen = new Vector3(Screen.height / 2, Screen.width / 2, 0);
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 100)){
+        if (Physics.Raycast(ray, out hit, 100, raycastMask)){
             targetedPoint = hit.point;
+            Debug.DrawLine(Camera.main.transform.position, targetedPoint, Color.red);
         }
         else
         {
             targetedPoint = ray.GetPoint(100);
+            Debug.DrawLine(Camera.main.transform.position, targetedPoint, Color.blue);
         }
-
-        Debug.DrawLine(ray.origin, targetedPoint);
+        
+        
 
         if (playerInput.GetButtonInput(PlayerInput.SWITCH_SPELL_FORWARD) && !isSwitching)
         {
