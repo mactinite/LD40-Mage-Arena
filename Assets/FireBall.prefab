@@ -170,7 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 75
   speed: 1000
-  hitFX: {fileID: 0}
+  hitFX: {fileID: 4694559591940078, guid: 41f539a0f2753e741afd0d89d5f090b8, type: 2}
 --- !u!114 &114604393624877098
 MonoBehaviour:
   m_ObjectHideFlags: 1

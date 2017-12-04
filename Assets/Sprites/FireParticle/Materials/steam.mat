@@ -8,11 +8,11 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: steam
   m_Shader: {fileID: 4800000, guid: ac2f92f6b286eea439e509d2343487ea, type: 3}
-  m_ShaderKeywords: _ALPHABLEND_ON _COLOR_ADJUST
+  m_ShaderKeywords: _ADDITIVEBLEND_SOFT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: 3001
   stringTagMap:
     AlphaDepth: true
     IGNOREPROJECTOR: true
@@ -57,7 +57,7 @@ Material:
     - _Cull: 0
     - _CustomRenderQueue: 0
     - _Cutoff: 0
-    - _DstBlend: 10
+    - _DstBlend: 6
     - _EmissionPower: 1
     - _EnableExternalAlpha: 0
     - _GlossMapScale: 1
@@ -65,7 +65,7 @@ Material:
     - _Hue: 0
     - _InvFade: 1
     - _Metallic: 0
-    - _RenderQueue: 0
+    - _RenderQueue: 1
     - _RimPower: 2
     - _Saturation: 1
     - _ShadowAlphaCutoff: 0.291

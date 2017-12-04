@@ -25,6 +25,7 @@ public class AnimationController : MonoBehaviour {
     {
         bool sprint = playerInput.GetButtonInput(PlayerInput.SPRINT_BUTTON);
         bool isCasting = spellController.isCasting;
+        bool isVenting = spellController.isVenting;
         if (playerInput.GetAxisInput(PlayerInput.MOVE_X) != 0 || playerInput.GetAxisInput(PlayerInput.MOVE_Y) != 0)
         {
             anim.SetBool("isMoving", true);
@@ -40,31 +41,29 @@ public class AnimationController : MonoBehaviour {
 
 
 
-        if (!sprint && !castButton && !isCasting && !ventButton)
+        if (!sprint && !isCasting && !isVenting)
         {
             if (playerInput.GetButtonInput(PlayerInput.CAST_BUTTON_DOWN))
             {
                 castButton = true;
                 anim.SetTrigger("CastStart");
-                if (!spellController.currentSpell.IsLooping())
-                {
-                    anim.SetTrigger("CastEnd");
-                }
+                anim.ResetTrigger("CastEnd");
             }
         }
         if (playerInput.GetButtonInput(PlayerInput.CAST_BUTTON_UP))
         {
-            if (castButton)
+            castButton = false;
+            if (isCasting)
             {
-                castButton = false;
                 if (spellController.currentSpell.IsLooping())
                 {
+                    anim.ResetTrigger("CastStart");
                     anim.SetTrigger("CastEnd");
                 }
             }
         }
 
-        if (!ventButton && !sprint && !isCasting)
+        if (!isVenting && !sprint && !isCasting)
         {
             if (playerInput.GetButtonInput(PlayerInput.VENT_BUTTON_DOWN))
             {
@@ -77,7 +76,7 @@ public class AnimationController : MonoBehaviour {
                 anim.SetTrigger("VentStart");
             }
         }
-        if(ventButton)
+        if (isVenting)
         {
             if (playerInput.GetButtonInput(PlayerInput.VENT_BUTTON_UP))
             {

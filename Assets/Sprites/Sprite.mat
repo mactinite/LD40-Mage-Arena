@@ -8,15 +8,15 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: Sprite
   m_Shader: {fileID: 4800000, guid: f1c332c0884ef2b4bb26584f688eac3a, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA _ALPHABLEND_ON
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA _ADDITIVEBLEND _ALPHA_CLIP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3001
+  m_CustomRenderQueue: 2452
   stringTagMap:
-    AlphaDepth: true
+    AlphaDepth: False
     IGNOREPROJECTOR: true
-    RenderType: Transparent
+    RenderType: TransparentCutout
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -78,7 +78,7 @@ Material:
     - _CustomRenderQueue: 0
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _DstBlend: 10
+    - _DstBlend: 1
     - _EmissionPower: 1
     - _EnableExternalAlpha: 0
     - _GlossMapScale: 1
@@ -89,15 +89,15 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RenderQueue: 1
+    - _RenderQueue: 2
     - _RimPower: 2
     - _Saturation: 1
     - _ShadowAlphaCutoff: 0.1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 1
+    - _SrcBlend: 5
     - _UVSec: 0
-    - _ZWrite: 0
+    - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
