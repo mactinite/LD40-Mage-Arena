@@ -14,12 +14,22 @@ public class SpellController : MonoBehaviour {
 
     public Vector3 targetedPoint;
     private Vector3 centerScreen;
+
+    private float heatLevel = 0f;
+    public float maxHeat = 100f;
+    public float overHeatLevel = 75f;
     public float recoveryTime = 0.5f;
+    public float ventRate = 5f;
     private float recoveryTimer;
     private float switchBuffer = 0.25f;
     private float switchTimer;
     private bool isSwitching = false;
     public bool isCasting = false;
+    public bool isVenting = false;
+
+    public delegate void UpdateUI(float newHeatLevel);
+    public UpdateUI OnHeatChange = delegate { };
+
     // init
     private void Awake()
     {
@@ -44,6 +54,13 @@ public class SpellController : MonoBehaviour {
         
         currentSpell = acquiredSpells[0];
         currentSpell.Equip(this);
+    }
+
+
+
+    private void Start()
+    {
+        OnHeatChange(heatLevel);
     }
 
     // Update is called once per frame
@@ -79,6 +96,7 @@ public class SpellController : MonoBehaviour {
                 currentSpell.Cast(this);
                 fpsController.enableRunning = false;
                 isCasting = true;
+                isVenting = false;
             }
 
             if (playerInput.GetButtonInput(PlayerInput.CAST_BUTTON_UP))
@@ -86,6 +104,12 @@ public class SpellController : MonoBehaviour {
                 currentSpell.Stop(this);
                 fpsController.enableRunning = false;
                 isCasting = false;
+                
+            }
+
+            if (isCasting)
+            {
+                AddHeat(currentSpell.GetHeat() * Time.deltaTime);
             }
         }
         else
@@ -93,7 +117,30 @@ public class SpellController : MonoBehaviour {
             if (playerInput.GetButtonInput(PlayerInput.CAST_BUTTON_DOWN) && !playerInput.GetButtonInput(PlayerInput.SPRINT_BUTTON) && isCasting != true)
             {
                 currentSpell.Cast(this);
+                AddHeat(currentSpell.GetHeat());
                 isCasting = true;
+            }
+        }
+
+        if (!playerInput.GetButtonInput(PlayerInput.SPRINT_BUTTON))
+        {
+            if (playerInput.GetButtonInput(PlayerInput.VENT_BUTTON_DOWN))
+            {
+                currentSpell.Stop(this);
+                isCasting = false;
+                fpsController.enableRunning = false;
+                isVenting = true;
+            }
+
+            if (playerInput.GetButtonInput(PlayerInput.VENT_BUTTON_UP))
+            {
+                fpsController.enableRunning = true;
+                isVenting = false;
+            }
+
+            if (isVenting)
+            {
+                VentHeat(ventRate * Time.deltaTime);
             }
         }
 
@@ -104,6 +151,7 @@ public class SpellController : MonoBehaviour {
             {
                 isCasting = false;
                 recoveryTimer = 0;
+               
             }
         }
 
@@ -161,5 +209,42 @@ public class SpellController : MonoBehaviour {
             currentSpell.Equip(this);
 
         }
+    }
+
+    public float GetHeatLevel()
+    {
+        return heatLevel;
+    }
+
+    public void AddHeat(float heat)
+    {
+        if(heatLevel + heat > overHeatLevel)
+        {
+            GetComponent<PlayerHealth>().Damage(heat);
+        }
+
+        if(heatLevel + heat <= maxHeat)
+        {
+            heatLevel += heat;
+        }
+        else
+        {
+            heatLevel = maxHeat;
+        }
+        OnHeatChange(heatLevel);
+
+    }
+
+    public void VentHeat(float heat)
+    {
+        if (heatLevel - heat <= 0)
+        {
+            heatLevel = 0;
+        }
+        else
+        {
+            heatLevel -= heat;
+        }
+        OnHeatChange(heatLevel);
     }
 }

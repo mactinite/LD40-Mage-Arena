@@ -11,6 +11,7 @@ public class AnimationController : MonoBehaviour {
     public PlayerInput playerInput;
     public SpellController spellController;
     bool castButton = false;
+    bool ventButton = false;
 
     // Use this for initialization
     void Start () {
@@ -18,9 +19,10 @@ public class AnimationController : MonoBehaviour {
         spellController = GetComponent<SpellController>();
         playerInput = GetComponent<PlayerInput>();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         bool sprint = playerInput.GetButtonInput(PlayerInput.SPRINT_BUTTON);
         bool isCasting = spellController.isCasting;
         if (playerInput.GetAxisInput(PlayerInput.MOVE_X) != 0 || playerInput.GetAxisInput(PlayerInput.MOVE_Y) != 0)
@@ -36,7 +38,7 @@ public class AnimationController : MonoBehaviour {
 
         anim.SetBool("isSpellOneShot", !spellController.currentSpell.IsLooping());
 
-        
+
 
         if (!sprint && !castButton && !isCasting)
         {
@@ -49,8 +51,6 @@ public class AnimationController : MonoBehaviour {
                     anim.SetTrigger("CastEnd");
                 }
             }
-
-
         }
         if (playerInput.GetButtonInput(PlayerInput.CAST_BUTTON_UP))
         {
@@ -64,6 +64,26 @@ public class AnimationController : MonoBehaviour {
             }
         }
 
+        if (!ventButton)
+        {
+            if (playerInput.GetButtonInput(PlayerInput.VENT_BUTTON_DOWN))
+            {
+                ventButton = true;
+                castButton = false;
+                if (spellController.currentSpell.IsLooping())
+                {
+                    anim.SetTrigger("CastEnd");
+                }
+                anim.SetTrigger("VentStart");
+            }
 
+            if (playerInput.GetButtonInput(PlayerInput.VENT_BUTTON_UP))
+            {
+                ventButton = false;
+                anim.SetTrigger("VentEnd");
+            }
+
+
+        }
     }
 }

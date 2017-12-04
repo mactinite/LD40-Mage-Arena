@@ -170,6 +170,7 @@ namespace CustomInput
             Cast = new Command<bool>(CAST_BUTTON, () => { return GetAllKeys(CastKeys); });
             CastUp = new Command<bool>(CAST_BUTTON_UP, () => { return GetAllKeysUp(CastKeys); });
             CastDown = new Command<bool>(CAST_BUTTON_DOWN, () => { return GetAllKeysDown(CastKeys); });
+            VentUp = new Command<bool>(VENT_BUTTON_DOWN, () => { return GetAllKeysUp(VentKeys); });
             VentDown = new Command<bool>(VENT_BUTTON_DOWN, () => { return GetAllKeysDown(VentKeys); });
             MoveX = new Command<float>(MOVE_X, () => { return Input.GetAxisRaw(MoveXAxis); });
             MoveY = new Command<float>(MOVE_Y, () => { return Input.GetAxisRaw(MoveYAxis); });

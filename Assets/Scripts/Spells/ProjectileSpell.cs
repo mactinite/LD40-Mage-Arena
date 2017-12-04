@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class ProjectileSpell : MonoBehaviour, ISpell {
 
-
     public Projectile projectilePrefab;
     public float delay = 0.25f;
     bool fired = false;
+    public int heat = 10;
     private Projectile primedProjectile;
     // This is pretty cool, actions are dope
     public void Cast(SpellController controller)
@@ -63,4 +63,14 @@ public class ProjectileSpell : MonoBehaviour, ISpell {
         // Not called for non-looping spells;
     }
 
+
+    public string GetName()
+    {
+        return gameObject.name;
+    }
+
+    public float GetHeat()
+    {
+        return heat;
+    }
 }

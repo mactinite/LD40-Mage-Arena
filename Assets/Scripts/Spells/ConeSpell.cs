@@ -8,6 +8,8 @@ public class ConeSpell : MonoBehaviour, ISpell {
     public ParticleSystem effect;
     public int DamagePerParticle = 5;
     public bool isLoop = true;
+    public float heatPerSecond = 25;
+
 
     public void Cast(SpellController controller)
     {
@@ -34,6 +36,7 @@ public class ConeSpell : MonoBehaviour, ISpell {
         effect.Stop();
     }
 
+
     // When the particles hit an enemy
     void OnParticleCollision(GameObject other)
     {
@@ -46,4 +49,13 @@ public class ConeSpell : MonoBehaviour, ISpell {
 
     }
 
+    public string GetName()
+    {
+        return gameObject.name;
+    }
+
+    public float GetHeat()
+    {
+        return heatPerSecond;
+    }
 }
