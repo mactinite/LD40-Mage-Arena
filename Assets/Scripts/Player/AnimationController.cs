@@ -6,12 +6,12 @@ using UnityEngine;
 public class AnimationController : MonoBehaviour {
 
     FirstPersonDrifter controller;
-    private ParticleSystem.EmissionModule emission;
     public Animator anim;
     public PlayerInput playerInput;
     public SpellController spellController;
     bool castButton = false;
     bool ventButton = false;
+    public ParticleSystem ventFX;
 
     // Use this for initialization
     void Start () {
@@ -40,7 +40,7 @@ public class AnimationController : MonoBehaviour {
 
 
 
-        if (!sprint && !castButton && !isCasting)
+        if (!sprint && !castButton && !isCasting && !ventButton)
         {
             if (playerInput.GetButtonInput(PlayerInput.CAST_BUTTON_DOWN))
             {
@@ -64,26 +64,27 @@ public class AnimationController : MonoBehaviour {
             }
         }
 
-        if (!ventButton)
+        if (!ventButton && !sprint && !isCasting)
         {
             if (playerInput.GetButtonInput(PlayerInput.VENT_BUTTON_DOWN))
             {
                 ventButton = true;
-                castButton = false;
+                ventFX.Play();
                 if (spellController.currentSpell.IsLooping())
                 {
                     anim.SetTrigger("CastEnd");
                 }
                 anim.SetTrigger("VentStart");
             }
-
+        }
+        if(ventButton)
+        {
             if (playerInput.GetButtonInput(PlayerInput.VENT_BUTTON_UP))
             {
+                ventFX.Stop();
                 ventButton = false;
                 anim.SetTrigger("VentEnd");
             }
-
-
         }
     }
 }

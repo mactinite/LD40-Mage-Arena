@@ -18,8 +18,9 @@ public class HeatBar : MonoBehaviour {
 
     public void OnHeatChange(float newHeat)
     {
+        
         heatBarImage.fillAmount = newHeat / spellController.maxHeat;
-        if(newHeat / spellController.maxHeat >= 0.75f)
+        if(newHeat / spellController.maxHeat >= 0.5f)
         {
             HeatWarning.gameObject.SetActive(true);
         }
@@ -27,6 +28,7 @@ public class HeatBar : MonoBehaviour {
         {
             HeatWarning.gameObject.SetActive(false);
         }
+        HeatWarning.GetComponent<Animator>().SetFloat("CurrentHeatLevel", newHeat);
         heatBarImage.SetAllDirty();
     }
 

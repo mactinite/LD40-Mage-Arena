@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 3d7d2d48fa38b854688a2eb98dfafcf8
-timeCreated: 1512352329
+guid: 8f914a1c54fc4ca478b73a4ce1857594
+timeCreated: 1512355340
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
@@ -45,7 +45,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 112
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -84,7 +84,7 @@ TextureImporter:
     sprites: []
     outline: []
     physicsShape: []
-  spritePackingTag: 
+  spritePackingTag: Hands
   userData: 
   assetBundleName: 
   assetBundleVariant: 

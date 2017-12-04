@@ -26,7 +26,6 @@ public class SpellController : MonoBehaviour {
     private bool isSwitching = false;
     public bool isCasting = false;
     public bool isVenting = false;
-
     public delegate void UpdateUI(float newHeatLevel);
     public UpdateUI OnHeatChange = delegate { };
 
@@ -91,7 +90,7 @@ public class SpellController : MonoBehaviour {
         if (currentSpell.IsLooping())
         {
             
-            if (playerInput.GetButtonInput(PlayerInput.CAST_BUTTON_DOWN) && !playerInput.GetButtonInput(PlayerInput.SPRINT_BUTTON))
+            if (playerInput.GetButtonInput(PlayerInput.CAST_BUTTON_DOWN) && !playerInput.GetButtonInput(PlayerInput.SPRINT_BUTTON) && !isVenting)
             {
                 currentSpell.Cast(this);
                 fpsController.enableRunning = false;
@@ -114,7 +113,7 @@ public class SpellController : MonoBehaviour {
         }
         else
         {
-            if (playerInput.GetButtonInput(PlayerInput.CAST_BUTTON_DOWN) && !playerInput.GetButtonInput(PlayerInput.SPRINT_BUTTON) && isCasting != true)
+            if (playerInput.GetButtonInput(PlayerInput.CAST_BUTTON_DOWN) && !playerInput.GetButtonInput(PlayerInput.SPRINT_BUTTON) && !isCasting && !isVenting)
             {
                 currentSpell.Cast(this);
                 AddHeat(currentSpell.GetHeat());
@@ -122,7 +121,7 @@ public class SpellController : MonoBehaviour {
             }
         }
 
-        if (!playerInput.GetButtonInput(PlayerInput.SPRINT_BUTTON))
+        if (!playerInput.GetButtonInput(PlayerInput.SPRINT_BUTTON) && !isCasting)
         {
             if (playerInput.GetButtonInput(PlayerInput.VENT_BUTTON_DOWN))
             {
