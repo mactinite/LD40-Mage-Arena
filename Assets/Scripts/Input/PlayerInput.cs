@@ -9,6 +9,7 @@ namespace CustomInput
     {
 
         public Command<bool> JumpDown;
+        public Command<bool> Jump;
         public Command<bool> JumpUp;
         public Command<bool> CastUp;
         public Command<bool> CastDown;
@@ -44,6 +45,7 @@ namespace CustomInput
         [HideInInspector]
         private string aimYAxis;
 
+        public const string JUMP_BUTTON = "JumpDown";
         public const string JUMP_BUTTON_DOWN = "JumpDown";
         public const string JUMP_BUTTON_UP = "JumpUp";
         public const string CAST_BUTTON = "Cast";
@@ -166,6 +168,7 @@ namespace CustomInput
         void Start()
         {
             JumpDown = new Command<bool>(JUMP_BUTTON_DOWN, () => { return GetAllKeysDown(JumpKeys); });
+            Jump = new Command<bool>(JUMP_BUTTON, () => { return GetAllKeys(JumpKeys); });
             JumpUp = new Command<bool>(JUMP_BUTTON_UP, () => { return GetAllKeysUp(JumpKeys); });
             Cast = new Command<bool>(CAST_BUTTON, () => { return GetAllKeys(CastKeys); });
             CastUp = new Command<bool>(CAST_BUTTON_UP, () => { return GetAllKeysUp(CastKeys); });

@@ -79,7 +79,7 @@ public class FirstPersonDrifter: MonoBehaviour
 
         float inputX = playerInput.GetAxisInput(PlayerInput.MOVE_X);
         float inputY = Input.GetAxis(PlayerInput.MOVE_Y);
-        bool jump = !playerInput.GetButtonInput(PlayerInput.JUMP_BUTTON_DOWN);
+        bool jump = !playerInput.GetButtonInput(PlayerInput.JUMP_BUTTON);
         bool sprint = playerInput.GetButtonInput(PlayerInput.SPRINT_BUTTON);
 
         // If both horizontal and vertical are used simultaneously, limit speed (if allowed), so the total doesn't exceed normal move speed
@@ -134,14 +134,13 @@ public class FirstPersonDrifter: MonoBehaviour
                 playerControl = true;
             }
 
-            // Jump! But only if the jump button has been released and player has been grounded for a given number of frames
-            if (jump)
+            // Jump! But only if the player has been grounded for a given number of frames
+            if (!jump)
                 jumpTimer++;
             else if (jumpTimer >= antiBunnyHopFactor)
             {
                 moveDirection.y = jumpSpeed;
                 jumpTimer = 0;
-
             }
         }
         else

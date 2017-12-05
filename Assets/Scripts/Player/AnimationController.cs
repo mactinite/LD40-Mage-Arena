@@ -68,21 +68,33 @@ public class AnimationController : MonoBehaviour {
             if (playerInput.GetButtonInput(PlayerInput.VENT_BUTTON_DOWN))
             {
                 ventButton = true;
-                ventFX.Play();
+                if (spellController.GetHeatLevel() > 0)
+                {
+                    ventFX.Play();
+                }
                 if (spellController.currentSpell.IsLooping())
                 {
                     anim.SetTrigger("CastEnd");
                 }
-                anim.SetTrigger("VentStart");
+                anim.SetBool("VentStart", true);
             }
         }
         if (isVenting)
         {
-            if (playerInput.GetButtonInput(PlayerInput.VENT_BUTTON_UP))
+            if(spellController.GetHeatLevel() <= 0)
             {
                 ventFX.Stop();
                 ventButton = false;
-                anim.SetTrigger("VentEnd");
+                anim.SetBool("VentStart", false);
+            }
+            if (playerInput.GetButtonInput(PlayerInput.VENT_BUTTON_UP))
+            {
+                ventFX.Stop();
+                if (ventButton)
+                {
+                    ventButton = false;
+                    anim.SetBool("VentStart", false);
+                }
             }
         }
     }

@@ -105,7 +105,7 @@ public class SpellController : MonoBehaviour {
             if (playerInput.GetButtonInput(PlayerInput.CAST_BUTTON_UP))
             {
                 currentSpell.Stop(this);
-                fpsController.enableRunning = false;
+                fpsController.enableRunning = true;
                 isCasting = false;
                 
             }
@@ -240,14 +240,17 @@ public class SpellController : MonoBehaviour {
 
     public void VentHeat(float heat)
     {
-        if (heatLevel - heat <= 0)
+        if (heatLevel > 0)
         {
-            heatLevel = 0;
+            if (heatLevel - heat <= 0)
+            {
+                heatLevel = 0;
+            }
+            else
+            {
+                heatLevel -= heat;
+            }
+            OnHeatChange(heatLevel);
         }
-        else
-        {
-            heatLevel -= heat;
-        }
-        OnHeatChange(heatLevel);
     }
 }

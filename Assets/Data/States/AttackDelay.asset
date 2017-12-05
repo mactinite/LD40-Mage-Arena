@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73bd7df59c2adae40bfae87216c29c3b, type: 3}
+  m_Name: AttackDelay
+  m_EditorClassIdentifier: 
+  actions: []
+  transitions:
+  - condition: {fileID: 11400000, guid: 8c03928a88e6422438f2d88f27b4b385, type: 2}
+    trueState: {fileID: 11400000, guid: 7c005d49bce6dda429fc988f1868f504, type: 2}
+    falseState: {fileID: 11400000}
+  - condition: {fileID: 11400000, guid: 85b6660ffb07cb54d8110d4e7c2a6412, type: 2}
+    trueState: {fileID: 11400000, guid: 607af598f8f63f343ad1c08e8f196b08, type: 2}
+    falseState: {fileID: 11400000}
+  sceneGizmoColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}

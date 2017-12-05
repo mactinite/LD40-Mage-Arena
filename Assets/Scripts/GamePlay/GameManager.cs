@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -12,6 +13,22 @@ public class GameManager : MonoBehaviour {
     public int maxWaves = 50;
     public AnimationCurve difficultyCurve;
 
+    public static Transform Player;
+    public bool gameEnabled = true;
+
+    int currentEnemyProgression = 0;
+    public Transform[] spawnPoints;
+    public Transform[] enemies;
+
+    public List<GameObject> currentEnemies = new List<GameObject>();
+    public bool Spawning = false;
+    public bool WaveStarted = false;
+    public bool skipIntro = false;
+    public float waveTimer = 0;
+
+
+    public Transform victoryScreen;
+
     private void Awake()
     {
         if(instance == null)
@@ -20,18 +37,45 @@ public class GameManager : MonoBehaviour {
         }
         else if(instance != this)
         {
+            instance.victoryScreen = this.victoryScreen;
+            instance.textParent = this.textParent;
             Destroy(gameObject);
         }
 
+        Player = GameObject.FindGameObjectWithTag("Player").transform;
+
         DontDestroyOnLoad(this);
-        StartCoroutine(IntroSequence());
+        if (gameEnabled && !skipIntro)
+        {
+            StartCoroutine("IntroSequence");
+        }
+
+
     }
 
+
+    void Init()
+    {
+
+        StopCoroutine("IntroSequence");
+        StopCoroutine("WaveAnnounce");
+        StopCoroutine("SpawnEnemies");
+        StopCoroutine("WaveUpdate");
+        StopCoroutine("EndGame");
+        currentEnemies.Clear();
+        Spawning = false;
+        WaveStarted = false;
+        skipIntro = false;
+        CurrentWave = 1;
+        currentEnemyProgression = 0;
+        StartCoroutine("WaveAnnounce",1);
+    }
 
     IEnumerator WaveAnnounce(int wave)
     {
         ShowText("Wave " + wave, 4.9f);
         yield return new WaitForSeconds(5f);
+        StartWave(wave);
     }
 
     IEnumerator IntroSequence()
@@ -44,7 +88,7 @@ public class GameManager : MonoBehaviour {
         ShowText("Welcome to the Arena, Mage.", 4.9f);
         yield return new WaitForSeconds(5f);
         // We are going to test your self control
-        ShowText("We are going to test your self control.", 4.9f);
+        ShowText("The Arena is an ethereal plane. We are going to test your self control.", 4.9f);
         yield return new WaitForSeconds(5f);
         //Ignis...
         ShowText("Ignis...", 2.4f);
@@ -74,15 +118,89 @@ public class GameManager : MonoBehaviour {
         ShowText("Press [Q] and [E] or (Y) and (B) to cyle through your spells", 5.9f);
         yield return new WaitForSeconds(6f);
         // In this trial you will fight until you perish, fight for glory.
-        ShowText("In this trial you will fight until you perish, fight for glory.", 6.9f);
+        ShowText("In this trial you will need to survive through 50 undead hordes, fight for glory.", 6.9f);
         yield return new WaitForSeconds(7.0f);
-        WaveAnnounce(1);
-        StartGame();
+        StartCoroutine("WaveAnnounce", 1);
+        
     }
-    void StartGame()
+
+
+    IEnumerator SpawnEnemies(int count)
+    {        
+        if(count == 0)
+        {
+            count = 1;
+        }
+        for (int i = 0; i < count; i++)
+        {
+            int enemyToSelect = Random.Range(0, currentEnemyProgression + 1);
+            Transform enemy = Instantiate(enemies[enemyToSelect], spawnPoints[Random.Range(0, spawnPoints.Length)].position, Quaternion.identity);
+            currentEnemies.Add(enemy.gameObject);
+            yield return new WaitForSeconds(Random.Range(0.1f, 1f));
+        }
+        Spawning = false;
+        StartCoroutine("WaveUpdate");
+    }
+
+    void StartWave(int waveNumber)
     {
+        if(waveNumber > 50)
+        {
+            StartCoroutine("EndGame");
+        }
+
+        if(waveNumber == 3)
+        {
+            currentEnemyProgression = 1;
+        }
+        WaveStarted = true;
+        Spawning = true;
+        StartCoroutine("SpawnEnemies",Mathf.CeilToInt(difficultyCurve.Evaluate(waveNumber)));
+    }
+
+
+    IEnumerator WaveUpdate()
+    {
+        yield return new WaitUntil(WaveEnded);
+
+        CurrentWave++;
+        StartCoroutine("WaveAnnounce",CurrentWave);
 
     }
+
+    IEnumerator EndGame()
+    {
+        victoryScreen.gameObject.SetActive(true);
+        yield return new WaitForSeconds(5f);
+        Application.Quit();
+    }
+
+    public bool WaveEnded()
+    {
+        if(currentEnemies.Count <= 0)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public void EnemyDied(GameObject enemy)
+    {
+        if (currentEnemies.Contains(enemy))
+        {
+            currentEnemies.Remove(enemy);
+        }
+    }
+
+    public void OnPlayerDead()
+    {
+        // Restart, but with intro skipped
+        skipIntro = true;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.sceneLoaded += (Scene scene, LoadSceneMode mode) => { Init(); };
+    }
+
 
     void ShowText(string text,float time)
     {
