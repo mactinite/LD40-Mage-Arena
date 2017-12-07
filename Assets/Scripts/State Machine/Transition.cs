@@ -8,7 +8,6 @@ namespace SimpleFSM
     {
         public Condition[] conditions;
         public State trueState;
-        public State falseState;
 
 
         public bool GetTransitionValue(StateController controller)
@@ -38,7 +37,7 @@ namespace SimpleFSM
                 }
             }
 
-            return isPassed ? trueState : falseState;
+            return isPassed ? trueState : null;
         }
 
     }
