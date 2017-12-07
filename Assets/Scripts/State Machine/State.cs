@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace FSM
+namespace SimpleFSM
 {
     [CreateAssetMenu(menuName = "New State")]
     public class State : ScriptableObject
@@ -12,13 +12,13 @@ namespace FSM
         public Transition[] transitions;
         public Color sceneGizmoColor = Color.grey;
 
-        public void UpdateState(Controller controller)
+        public void UpdateState(StateController controller)
         {
             DoActions(controller);
             CheckTransitions(controller);
         }
 
-        public void DoActions(Controller controller)
+        public void DoActions(StateController controller)
         {
             for (int i = 0; i < actions.Length; i++)
             {
@@ -26,21 +26,20 @@ namespace FSM
             }
         }
 
-        public void CheckTransitions(Controller controller)
+        public void CheckTransitions(StateController controller)
         {
+            State falseState = null;
             for (int i = 0; i < transitions.Length; i++)
             {
-                bool decisionSucceeded = transitions[i].condition.Decide(controller);
+                // OR all different transitions.
+                if (transitions[i].DoTransition(controller) != null)
+                {
+                    controller.TransitionToState(transitions[i].DoTransition(controller));
+                    return;
+                }
 
-                if (decisionSucceeded)
-                {
-                    controller.TransitionToState(transitions[i].trueState);
-                }
-                else
-                {
-                    controller.TransitionToState(transitions[i].falseState);
-                }
             }
+
         }
     }
 

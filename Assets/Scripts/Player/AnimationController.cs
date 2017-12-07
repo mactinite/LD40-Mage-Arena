@@ -9,8 +9,6 @@ public class AnimationController : MonoBehaviour {
     public Animator anim;
     public PlayerInput playerInput;
     public SpellController spellController;
-    bool castButton = false;
-    bool ventButton = false;
     public ParticleSystem ventFX;
 
     // Use this for initialization
@@ -23,13 +21,15 @@ public class AnimationController : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        bool sprint = playerInput.GetButtonInput(PlayerInput.SPRINT_BUTTON);
+        bool isSprinting = controller.enableRunning && playerInput.GetButtonInput(PlayerInput.SPRINT_BUTTON);
         bool isCasting = spellController.isCasting;
         bool isVenting = spellController.isVenting;
-        if (playerInput.GetAxisInput(PlayerInput.MOVE_X) != 0 || playerInput.GetAxisInput(PlayerInput.MOVE_Y) != 0)
+        anim.SetBool("isSpellOneShot", !spellController.currentSpell.IsLooping());
+
+        if (playerInput.GetAxisInput(PlayerInput.MOVE_X) != 0 || playerInput.GetAxisInput(PlayerInput.MOVE_Y) != 0) //TODO: Move this to a flag on the character controller
         {
             anim.SetBool("isMoving", true);
-            anim.SetBool("isRunning", sprint);
+            anim.SetBool("isRunning", isSprinting);
         }
         else
         {
@@ -37,65 +37,17 @@ public class AnimationController : MonoBehaviour {
             anim.SetBool("isMoving", false);
         }
 
-        anim.SetBool("isSpellOneShot", !spellController.currentSpell.IsLooping());
+        anim.SetBool("Casting", isCasting);
 
-
-
-        if (!sprint && !isCasting && !isVenting)
-        {
-            if (playerInput.GetButtonInput(PlayerInput.CAST_BUTTON_DOWN))
-            {
-                castButton = true;
-                anim.SetTrigger("CastStart");
-                anim.ResetTrigger("CastEnd");
-            }
-        }
-        if (playerInput.GetButtonInput(PlayerInput.CAST_BUTTON_UP))
-        {
-            castButton = false;
-            if (isCasting)
-            {
-                if (spellController.currentSpell.IsLooping())
-                {
-                    anim.ResetTrigger("CastStart");
-                    anim.SetTrigger("CastEnd");
-                }
-            }
-        }
-
-        if (!isVenting && !sprint && !isCasting)
-        {
-            if (playerInput.GetButtonInput(PlayerInput.VENT_BUTTON_DOWN))
-            {
-                ventButton = true;
-                if (spellController.GetHeatLevel() > 0)
-                {
-                    ventFX.Play();
-                }
-                if (spellController.currentSpell.IsLooping())
-                {
-                    anim.SetTrigger("CastEnd");
-                }
-                anim.SetBool("VentStart", true);
-            }
-        }
         if (isVenting)
         {
-            if(spellController.GetHeatLevel() <= 0)
-            {
-                ventFX.Stop();
-                ventButton = false;
-                anim.SetBool("VentStart", false);
-            }
-            if (playerInput.GetButtonInput(PlayerInput.VENT_BUTTON_UP))
-            {
-                ventFX.Stop();
-                if (ventButton)
-                {
-                    ventButton = false;
-                    anim.SetBool("VentStart", false);
-                }
-            }
+            ventFX.Play();
+            anim.SetBool("Venting", true);
+        }
+        else
+        {
+            ventFX.Stop();
+            anim.SetBool("Venting", false);
         }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-namespace FSM
+namespace SimpleFSM
 {
     public abstract class Condition : ScriptableObject
     {
-        public abstract bool Decide(Controller controller);
+        public abstract bool Decide(StateController controller);
     }
 }

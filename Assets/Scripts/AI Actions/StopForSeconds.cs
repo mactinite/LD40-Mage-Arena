@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using FSM;
+using SimpleFSM;
 [CreateAssetMenu(menuName = "Condition/AI/Stop For Seconds")]
 public class StopForSeconds : Condition {
 
@@ -11,7 +11,7 @@ public class StopForSeconds : Condition {
 
     bool enterredAction = false;
 
-    public override bool Decide(Controller controller)
+    public override bool Decide(StateController controller)
     {
         if (!enterredAction)
         {
@@ -24,6 +24,7 @@ public class StopForSeconds : Condition {
         if (timer > time)
         {
             enterredAction = false;
+            timer = 0;
             return true;
         }
         else

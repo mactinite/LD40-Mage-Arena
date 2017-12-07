@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using FSM;
+using SimpleFSM;
 [CreateAssetMenu(menuName = "Action/AI/FollowPlayer")]
 public class FollowPlayer : Action {
 
-    public override void Act(Controller controller)
+    public override void Act(StateController controller)
     {
         controller.GetComponent<NavMeshAgent>().isStopped = false;
 

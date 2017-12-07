@@ -14,6 +14,7 @@ namespace CustomInput
         public Command<bool> CastUp;
         public Command<bool> CastDown;
         public Command<bool> Cast;
+        public Command<bool> Vent;
         public Command<bool> VentUp;
         public Command<bool> VentDown;
         public Command<bool> Sprint;
@@ -21,9 +22,11 @@ namespace CustomInput
         public Command<float> MoveY;
         public Command<float> AimX;
         public Command<float> AimY;
+        
 
         public Command<bool> SpellSwitchForward;
         public Command<bool> SpellSwitchBack;
+        public Command<bool> Pause;
 
         public KeyCode[] JumpKeys;
         public KeyCode[] CastKeys;
@@ -31,6 +34,7 @@ namespace CustomInput
         public KeyCode[] SprintKeys;
         public KeyCode[] SpellSwitchForwardKeys;
         public KeyCode[] SpellSwitchBackKeys;
+        public KeyCode[] PauseKeys;
 
         [SerializeField]
         [HideInInspector]
@@ -45,12 +49,14 @@ namespace CustomInput
         [HideInInspector]
         private string aimYAxis;
 
+        public const string PAUSE_BUTTON = "Pause";
         public const string JUMP_BUTTON = "JumpDown";
         public const string JUMP_BUTTON_DOWN = "JumpDown";
         public const string JUMP_BUTTON_UP = "JumpUp";
         public const string CAST_BUTTON = "Cast";
         public const string CAST_BUTTON_DOWN = "CastDown";
         public const string CAST_BUTTON_UP = "CastUp";
+        public const string VENT_BUTTON = "Vent";
         public const string VENT_BUTTON_DOWN = "VentDown";
         public const string VENT_BUTTON_UP = "VentUp";
         public const string SPRINT_BUTTON = "Sprint";
@@ -150,6 +156,8 @@ namespace CustomInput
                     return VentDown.State;
                 case VENT_BUTTON_UP:
                     return VentUp.State;
+                case VENT_BUTTON:
+                    return Vent.State;
                 case SPRINT_BUTTON:
                     return Sprint.State;
                 case CAST_BUTTON:
@@ -158,6 +166,8 @@ namespace CustomInput
                     return SpellSwitchForward.State;
                 case SWITCH_SPELL_BACK:
                     return SpellSwitchBack.State;
+                case PAUSE_BUTTON:
+                    return Pause.State;
                 default:
                     Debug.LogError("Input " + name + " not implemented.");
                     return false;
@@ -173,6 +183,7 @@ namespace CustomInput
             Cast = new Command<bool>(CAST_BUTTON, () => { return GetAllKeys(CastKeys); });
             CastUp = new Command<bool>(CAST_BUTTON_UP, () => { return GetAllKeysUp(CastKeys); });
             CastDown = new Command<bool>(CAST_BUTTON_DOWN, () => { return GetAllKeysDown(CastKeys); });
+            Vent = new Command<bool>(VENT_BUTTON, () => { return GetAllKeys(VentKeys); });
             VentUp = new Command<bool>(VENT_BUTTON_DOWN, () => { return GetAllKeysUp(VentKeys); });
             VentDown = new Command<bool>(VENT_BUTTON_DOWN, () => { return GetAllKeysDown(VentKeys); });
             MoveX = new Command<float>(MOVE_X, () => { return Input.GetAxisRaw(MoveXAxis); });
@@ -180,6 +191,8 @@ namespace CustomInput
             AimX = new Command<float>(AIM_X, () => { return Input.GetAxisRaw(AimXAxis); });
             AimY = new Command<float>(AIM_Y, () => { return Input.GetAxisRaw(AimYAxis); });
             Sprint = new Command<bool>(JUMP_BUTTON_DOWN, () => { return GetAllKeys(SprintKeys); });
+            Pause = new Command<bool>(PAUSE_BUTTON, () => { return GetAllKeysDown(PauseKeys); });
+
 
             SpellSwitchForward = new Command<bool>(SWITCH_SPELL_FORWARD, () => { return GetAllKeys(SpellSwitchForwardKeys); });
             SpellSwitchBack = new Command<bool>(SWITCH_SPELL_BACK, () => { return GetAllKeys(SpellSwitchBackKeys); });

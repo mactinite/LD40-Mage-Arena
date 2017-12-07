@@ -24,6 +24,7 @@ public class SpellController : MonoBehaviour {
     private float switchBuffer = 0.25f;
     private float switchTimer;
     private bool isSwitching = false;
+    private bool castTimerElapsed = true;
     public bool isCasting = false;
     public bool isVenting = false;
     public delegate void UpdateUI(float newHeatLevel);
@@ -79,8 +80,6 @@ public class SpellController : MonoBehaviour {
             Debug.DrawLine(Camera.main.transform.position, targetedPoint, Color.blue);
         }
         
-        
-
         if (playerInput.GetButtonInput(PlayerInput.SWITCH_SPELL_FORWARD) && !isSwitching)
         {
             CycleSpellForward();
@@ -91,23 +90,50 @@ public class SpellController : MonoBehaviour {
             CycleSpellBackward();
         }
 
-        if (currentSpell.IsLooping())
+        if (isSwitching)
         {
-            
-            if (playerInput.GetButtonInput(PlayerInput.CAST_BUTTON_DOWN) && !playerInput.GetButtonInput(PlayerInput.SPRINT_BUTTON) && !isVenting)
+            switchTimer += Time.deltaTime;
+            if(switchTimer > switchBuffer)
             {
-                currentSpell.Cast(this);
-                fpsController.enableRunning = false;
-                isCasting = true;
-                isVenting = false;
+                isSwitching = false;
+                switchTimer = 0;
             }
 
-            if (playerInput.GetButtonInput(PlayerInput.CAST_BUTTON_UP))
+        }
+
+
+        HandleVenting();
+        HandleSpells();
+
+        // Allow sprint to interrupt casting and venting
+        if (playerInput.GetButtonInput(PlayerInput.SPRINT_BUTTON))
+        {
+            fpsController.enableRunning = true;
+            isVenting = false;
+            isCasting = false;
+        }
+        		
+	}
+
+    void HandleSpells()
+    {
+        if (currentSpell.IsLooping())
+        {
+
+            if (playerInput.GetButtonInput(PlayerInput.CAST_BUTTON) && !playerInput.GetButtonInput(PlayerInput.SPRINT_BUTTON) && !isVenting)
+            {
+                if (!isCasting)
+                {
+                    currentSpell.Cast(this);
+                    fpsController.enableRunning = false;
+                    isCasting = true;
+                }
+            }
+            else
             {
                 currentSpell.Stop(this);
                 fpsController.enableRunning = true;
                 isCasting = false;
-                
             }
 
             if (isCasting)
@@ -117,59 +143,50 @@ public class SpellController : MonoBehaviour {
         }
         else
         {
-            if (playerInput.GetButtonInput(PlayerInput.CAST_BUTTON_DOWN) && !playerInput.GetButtonInput(PlayerInput.SPRINT_BUTTON) && !isCasting && !isVenting)
+            // reset isCasting on next frame so the animator can catch it in the last frame
+            isCasting = false;
+            if (playerInput.GetButtonInput(PlayerInput.CAST_BUTTON_DOWN) && !playerInput.GetButtonInput(PlayerInput.SPRINT_BUTTON) && castTimerElapsed && !isVenting)
             {
+                castTimerElapsed = false;
                 currentSpell.Cast(this);
                 AddHeat(currentSpell.GetHeat());
                 isCasting = true;
             }
         }
 
-        if (!playerInput.GetButtonInput(PlayerInput.SPRINT_BUTTON) && !isCasting)
-        {
-            if (playerInput.GetButtonInput(PlayerInput.VENT_BUTTON_DOWN))
-            {
-                currentSpell.Stop(this);
-                isCasting = false;
-                fpsController.enableRunning = false;
-                isVenting = true;
-            }
 
-            if (playerInput.GetButtonInput(PlayerInput.VENT_BUTTON_UP))
-            {
-                fpsController.enableRunning = true;
-                isVenting = false;
-            }
-
-            if (isVenting)
-            {
-                VentHeat(ventRate * Time.deltaTime);
-            }
-        }
-
-        if (!currentSpell.IsLooping() && isCasting)
+        if (!currentSpell.IsLooping() && !castTimerElapsed)
         {
             recoveryTimer += Time.deltaTime;
-            if(recoveryTimer >= recoveryTime)
+            if (recoveryTimer >= recoveryTime)
             {
-                isCasting = false;
+                castTimerElapsed = true;
                 recoveryTimer = 0;
-               
             }
         }
+    }
 
-        if (isSwitching)
+    void HandleVenting()
+    {
+        if (playerInput.GetButtonInput(PlayerInput.VENT_BUTTON) && !playerInput.GetButtonInput(PlayerInput.SPRINT_BUTTON))
         {
-            switchTimer += Time.deltaTime;
-            if (switchTimer >= switchBuffer)
-            {
-                isSwitching = false;
-                switchTimer = 0;
-            }
+            currentSpell.Stop(this);
+            isCasting = false;
+            fpsController.enableRunning = false;
+            isVenting = true;
+        }
+        else
+        {
+            fpsController.enableRunning = true;
+            isVenting = false;
         }
 
-        		
-	}
+        if (isVenting)
+        {
+            VentHeat(ventRate * Time.deltaTime);
+        }
+    }
+
 
     void CycleSpellForward()
     {
@@ -210,7 +227,6 @@ public class SpellController : MonoBehaviour {
                 currentSpell = acquiredSpells[spellIndex];
             }
             currentSpell.Equip(this);
-
         }
     }
 

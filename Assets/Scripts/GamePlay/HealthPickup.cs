@@ -12,11 +12,11 @@ public class HealthPickup : MonoBehaviour {
     public float speed = 10;
     float distance;
     private float baseHeight;
+
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         baseHeight = transform.position.y;
-
     }
 	
 	// Update is called once per frame
@@ -34,13 +34,10 @@ public class HealthPickup : MonoBehaviour {
         {
             Vector3 pos = transform.position;
             Vector3 direction = player.position - pos;
-            direction.y = 0;
+
             pos += direction * Time.deltaTime * speed;
-            pos.y = baseHeight + heighCurve.Evaluate(1 - (distance / pickupDistance)) * heightScaling;
             transform.position = pos;
-
         }
-
 
     }
 }
