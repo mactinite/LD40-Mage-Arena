@@ -28,12 +28,12 @@ namespace SimpleFSM
 
         public void CheckTransitions(StateController controller)
         {
-            for (int i = 0; i <= transitions.Count; i++)
+            for (int i = 0; i < transitions.Count; i++)
             {
+                State transitionTo = transitions[i].DoTransition(controller);
                 // OR all different transitions.
-                if (transitions[i].DoTransition(controller) != null)
+                if (transitionTo != null)
                 {
-                    State transitionTo = transitions[i].DoTransition(controller);
                     controller.TransitionToState(transitionTo);
                     return;
                 }

@@ -18,7 +18,7 @@ namespace SimpleFSM
 
         public void TransitionToState(State nextState)
         {
-            if(nextState != currentState)
+            if(nextState != currentState && nextState != null)
             {
                 currentState = nextState;        
             }
