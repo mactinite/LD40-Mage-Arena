@@ -6,6 +6,7 @@ namespace SimpleFSM
     [System.Serializable]
     public class Transition
     {
+        public string Name;
         public Condition[] conditions;
         public State trueState;
 

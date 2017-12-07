@@ -9,7 +9,7 @@ namespace SimpleFSM
     public class State : ScriptableObject
     {
         public Action[] actions;
-        public Transition[] transitions;
+        public List<Transition> transitions = new List<Transition>();
         public Color sceneGizmoColor = Color.grey;
 
         public void UpdateState(StateController controller)
@@ -28,7 +28,7 @@ namespace SimpleFSM
 
         public void CheckTransitions(StateController controller)
         {
-            for (int i = 0; i < transitions.Length; i++)
+            for (int i = 0; i <= transitions.Count; i++)
             {
                 // OR all different transitions.
                 if (transitions[i].DoTransition(controller) != null)
@@ -41,6 +41,12 @@ namespace SimpleFSM
             }
 
         }
+
+        public override string ToString()
+        {
+            return this.name;
+        }
+
     }
 
 
