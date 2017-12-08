@@ -11,6 +11,7 @@ public class AnimationController : MonoBehaviour {
     public SpellController spellController;
     public ParticleSystem ventFX;
 
+
     // Use this for initialization
     void Start () {
         controller = GetComponent<FirstPersonDrifter>();

@@ -6,5 +6,6 @@ namespace SimpleFSM
     public abstract class Action : ScriptableObject
     {
         public abstract void Act(StateController controller);
+        public abstract void Reset(StateController controller);
     }
 }

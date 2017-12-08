@@ -32,4 +32,12 @@ public class StopForSeconds : Condition {
             return false;
         }
     }
+
+    public override void Reset(StateController controller)
+    {
+        timer = 0;
+        controller.GetComponent<NavMeshAgent>().isStopped = false;
+        enterredAction = false;
+    }
+
 }

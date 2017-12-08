@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4435007784675104}
   - component: {fileID: 108881538306304870}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Point light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,8 +42,8 @@ GameObject:
   - component: {fileID: 114251084608267072}
   - component: {fileID: 114604393624877098}
   - component: {fileID: 82331102382698288}
-  m_Layer: 11
-  m_Name: FireBall
+  m_Layer: 12
+  m_Name: FireBall Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -249,9 +249,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cc43393911183346a6e4338119fcb9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 200
+  damage: 50
   speed: 1000
-  hitFX: {fileID: 4694559591940078, guid: 41f539a0f2753e741afd0d89d5f090b8, type: 2}
+  hitFX: {fileID: 4694559591940078, guid: fd321c4863aef7e429f72ad3e9a7f622, type: 2}
+  isEnemyProjectile: 1
 --- !u!114 &114604393624877098
 MonoBehaviour:
   m_ObjectHideFlags: 1

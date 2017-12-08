@@ -16,4 +16,10 @@ public class FollowPlayer : Action {
         if (playerPos != agent.destination)
             agent.SetDestination(playerPos);
     }
+
+    public override void Reset(StateController controller)
+    {
+       
+    }
+
 }

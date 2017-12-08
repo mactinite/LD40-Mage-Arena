@@ -1127,7 +1127,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1834196892783494}
-  m_LocalRotation: {x: 0.73471886, y: -0.11823565, z: 0.6521467, w: -0.14461392}
+  m_LocalRotation: {x: 0.7347189, y: -0.118235655, z: 0.65214676, w: -0.14461394}
   m_LocalPosition: {x: -0.20544983, y: 0.0000000121071935, z: -0.000000044703484}
   m_LocalScale: {x: 1, y: 0.9999997, z: 1}
   m_Children:
@@ -2353,6 +2353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   healthAddFX: {fileID: 198420296196638132}
+  healthHitFX: {fileID: 0}
 --- !u!114 &114157276259984748
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2448,6 +2449,7 @@ MonoBehaviour:
   SprintKeys: 3001000052010000
   SpellSwitchForwardKeys: 650000004d010000
   SpellSwitchBackKeys: 710000004b010000
+  PauseKeys: 
   moveXAxis: MoveX
   moveYAxis: MoveY
   aimXAxis: Mouse X

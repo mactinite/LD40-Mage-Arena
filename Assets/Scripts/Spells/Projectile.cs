@@ -10,6 +10,8 @@ public class Projectile : MonoBehaviour {
     public float speed = 20;
     public Transform hitFX;
 
+    public bool isEnemyProjectile = false;
+
 	void Awake () {
         rb = GetComponent<Rigidbody>();
         
@@ -17,12 +19,22 @@ public class Projectile : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
-        if (damageable != null)
+        if (isEnemyProjectile)
         {
-            damageable.Damage(damage);
+            PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
+            if (player != null)
+            {
+                player.Damage(damage);
+            }
         }
-
+        else
+        {
+            IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
+            if (damageable != null)
+            {
+                damageable.Damage(damage);
+            }
+        }
         if (hitFX != null)
         {
             Instantiate(hitFX, transform.position, Quaternion.identity);

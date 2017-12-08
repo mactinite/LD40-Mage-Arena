@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SimpleFSM;
+
+
 [CreateAssetMenu(menuName = "Condition/AI/Distance To Player")]
 public class DistanceToPlayer : Condition
 {
@@ -13,5 +15,10 @@ public class DistanceToPlayer : Condition
         float playerDistance = Vector3.Distance(controller.transform.position, GameManager.Player.position);
         bool check = greaterThan ? playerDistance >= distance : playerDistance <= distance;
         return check;
+    }
+
+    public override void Reset(StateController controller)
+    {
+        //nothing
     }
 }

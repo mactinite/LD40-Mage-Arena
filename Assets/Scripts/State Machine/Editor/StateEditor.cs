@@ -38,6 +38,9 @@ public class StateEditor : Editor
                 EditorGUI.PropertyField(
                 new Rect(rect.x + 200, rect.y, rect.width - 200, EditorGUIUtility.singleLineHeight),
                 element.FindPropertyRelative("trueState"), GUIContent.none);
+            },
+            onRemoveCallback = (ReorderableList list) =>{
+                state.transitions.RemoveAt(list.index);
             }
         };
     }

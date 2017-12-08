@@ -41,5 +41,13 @@ namespace SimpleFSM
             return isPassed ? trueState : null;
         }
 
+        public void ResetConditions(StateController controller)
+        {
+            foreach(Condition condition in conditions)
+            {
+                condition.Reset(controller);
+            }
+        }
+
     }
 }

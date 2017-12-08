@@ -6,5 +6,6 @@ namespace SimpleFSM
     public abstract class Condition : ScriptableObject
     {
         public abstract bool Decide(StateController controller);
+        public abstract void Reset(StateController controller);
     }
 }

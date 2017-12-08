@@ -8,8 +8,11 @@ namespace SimpleFSM
     {
         public State currentState;
 
-        [HideInInspector] public float stateTimeElapsed;
-
+        private void Start()
+        {
+            ResetTransitions();
+            ResetActions();
+        }
 
         void Update()
         {
@@ -20,7 +23,9 @@ namespace SimpleFSM
         {
             if(nextState != currentState && nextState != null)
             {
-                currentState = nextState;        
+                ResetActions();
+                ResetTransitions();
+                currentState = nextState;
             }
         }
          
@@ -28,6 +33,23 @@ namespace SimpleFSM
         {
             Gizmos.color = currentState.sceneGizmoColor;
             Gizmos.DrawWireCube(transform.position, Vector3.one);
+        }
+
+
+        void ResetActions()
+        {
+            foreach(Action action in currentState.actions)
+            {
+                action.Reset(this);
+            }
+        }
+
+        void ResetTransitions()
+        {
+            foreach(Transition transition in currentState.transitions)
+            {
+                transition.ResetConditions(this);
+            }
         }
 
     }
