@@ -12,6 +12,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
 
     public void Damage(int damage)
     {
+        DamageDisplayManager.instance.SpawnText(damage.ToString(), Color.red, this.transform);
         if (health - damage <= 0)
         {
             Die();

@@ -11,6 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebb2fbe79148e2b46943bbd909d54e46, type: 3}
   m_Name: Nav To Random Point Near Player
   m_EditorClassIdentifier: 
-  distance: 25
-  innerRadius: 5
-  outerRadius: 10
+  innerRadius: 15
+  outerRadius: 20

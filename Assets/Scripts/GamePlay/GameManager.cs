@@ -49,6 +49,10 @@ public class GameManager : MonoBehaviour {
         {
             StartCoroutine("IntroSequence");
         }
+        else
+        {
+            StartCoroutine("WaveAnnounce", 1);
+        }
 
 
     }
@@ -73,8 +77,8 @@ public class GameManager : MonoBehaviour {
 
     IEnumerator WaveAnnounce(int wave)
     {
-        ShowText("Wave " + wave, 4.9f);
-        yield return new WaitForSeconds(5f);
+        ShowText("Wave " + wave, 3f);
+        yield return new WaitForSeconds(1f);
         StartWave(wave);
     }
 
@@ -83,43 +87,43 @@ public class GameManager : MonoBehaviour {
 
         Debug.Log("IntroSequence");
         // Delay with no text, let the player check out their surroundings.
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         // Welcome to the Arena, Mage.
-        ShowText("Welcome to the Arena, Mage.", 4.9f);
-        yield return new WaitForSeconds(5f);
+        ShowText("Welcome to the Arena, Mage.", 2f);
+        yield return new WaitForSeconds(2f);
         // We are going to test your self control
-        ShowText("The Arena is an ethereal plane. We are going to test your self control.", 4.9f);
-        yield return new WaitForSeconds(5f);
+        ShowText("The Arena is an ethereal plane. We are going to test your self control.", 2f);
+        yield return new WaitForSeconds(2f);
         //Ignis...
-        ShowText("Ignis...", 2.4f);
-        yield return new WaitForSeconds(2.5f);
+        ShowText("Ignis...", 1f);
+        yield return new WaitForSeconds(1f);
         // Fire....
-        ShowText("Fire...", 2.4f);
-        yield return new WaitForSeconds(2.5f);
+        ShowText("Fire...", 1f);
+        yield return new WaitForSeconds(1f);
         // Here you must protect yourself with the fire that burns inside you.
-        ShowText("Here you must protect yourself with the fire that burns inside you.", 5.9f);
-        yield return new WaitForSeconds(6f);
+        ShowText("Here you must protect yourself with the fire that burns inside you.", 2f);
+        yield return new WaitForSeconds(2f);
         // Show prompts for casting spell
-        ShowText("Cast spells with [Left Click] or [Right Bumper]", 5.9f);
-        yield return new WaitForSeconds(6.0f);
+        ShowText("Cast spells with [Left Click] or [Right Bumper]", 3f);
+        yield return new WaitForSeconds(3f);
         // Be wary, mage, for if you indulge too much you will hurt yourself.
-        ShowText("Be wary, mage, for if you indulge too much you will hurt yourself.", 7.9f);
-        yield return new WaitForSeconds(8.0f);
+        ShowText("Be wary, mage, for if you indulge too much you will hurt yourself.", 2f);
+        yield return new WaitForSeconds(2f);
         // You must cool yourself off if you wish to remain unharmed.
-        ShowText("You must cool yourself off if you wish to remain unharmed.", 4.9f);
-        yield return new WaitForSeconds(5f);
+        ShowText("You must cool yourself off if you wish to remain unharmed.", 2f);
+        yield return new WaitForSeconds(2f);
         // Show prompts for venting
-        ShowText("Cool off with [Right Click] or [Left Bumper]", 6.9f);
-        yield return new WaitForSeconds(7.0f);
+        ShowText("Cool off with [Right Click] or [Left Bumper]", 3f);
+        yield return new WaitForSeconds(3f);
         // As a novice mage you have access to two spells
-        ShowText("As a novice mage you have access to two spells", 4.9f);
-        yield return new WaitForSeconds(5.9f);
+        ShowText("As a novice mage you have access to two spells", 2f);
+        yield return new WaitForSeconds(2f);
         // Show button prompts for switching spells
-        ShowText("Press [Q] and [E] or (Y) and (B) to cyle through your spells", 5.9f);
-        yield return new WaitForSeconds(6f);
+        ShowText("Press [Q] and [E] or (Y) and (B) to cyle through your spells", 3f);
+        yield return new WaitForSeconds(3f);
         // In this trial you will fight until you perish, fight for glory.
-        ShowText("In this trial you will need to survive through 50 undead hordes, fight for glory.", 6.9f);
-        yield return new WaitForSeconds(7.0f);
+        ShowText("In this trial you will need to survive through 50 undead hordes, fight for glory.", 2f);
+        yield return new WaitForSeconds(2f);
         StartCoroutine("WaveAnnounce", 1);
         
     }
@@ -152,6 +156,11 @@ public class GameManager : MonoBehaviour {
         if(waveNumber == 3)
         {
             currentEnemyProgression = 1;
+        }
+
+        if (waveNumber == 1)
+        {
+            currentEnemyProgression = 2;
         }
         WaveStarted = true;
         Spawning = true;

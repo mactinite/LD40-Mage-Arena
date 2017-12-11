@@ -24,8 +24,6 @@ public class ExitTime : Condition {
         timer += Time.deltaTime;
         if (timer > time)
         {
-            enterredAction = false;
-            timer = 0;
             return true;
         }
         else

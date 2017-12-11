@@ -6,7 +6,6 @@ using UnityEngine.AI;
 [CreateAssetMenu(menuName = "Action/AI/NavToRandomPointNearPlayer")]
 public class NavToRandomPointNearPlayer : Action
 {
-    public float distance = 25;
     public float innerRadius = 2f;
     public float outerRadius = 5f;
 
@@ -17,13 +16,15 @@ public class NavToRandomPointNearPlayer : Action
     bool init = false;
     public override void Act(StateController controller)
     {
-        agent.isStopped = false;
+        
         if (!init)
             Init(controller);
-        Debug.DrawLine(controller.transform.position, RandomPoint);
-        Debug.DrawLine(GameManager.Player.position, RandomPoint);
+
+        Debug.DrawLine(controller.transform.position, RandomPoint, Color.blue, Time.deltaTime);
+        Debug.DrawLine(GameManager.Player.position, RandomPoint, Color.red, Time.deltaTime);
         if (Vector3.Distance(RandomPoint, controller.transform.position) < 1)
         {
+            Debug.DrawLine(controller.transform.position, RandomPoint, Color.red , Time.deltaTime);
             init = false;
         }
 
@@ -36,12 +37,10 @@ public class NavToRandomPointNearPlayer : Action
 
     void Init(StateController controller )
     {
+        agent = controller.GetComponent<NavMeshAgent>();
         agent.isStopped = false;
         RandomPoint = GetRandomPositionInTorus(innerRadius, outerRadius);
         RandomPoint += GameManager.Player.position;
-
-
-        agent = controller.GetComponent<NavMeshAgent>();
         NavMeshHit hit;
         NavMesh.SamplePosition(RandomPoint, out hit, 25f, NavMesh.AllAreas);
         RandomPoint = hit.position;

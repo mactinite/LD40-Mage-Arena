@@ -26,6 +26,8 @@ namespace SimpleFSM
                 ResetActions();
                 ResetTransitions();
                 currentState = nextState;
+                ResetActions();
+                ResetTransitions();
             }
         }
          

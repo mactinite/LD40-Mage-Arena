@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6b0c1565829f7d49820a9f44690ca49, type: 3}
   m_Name: ExitAfter5
   m_EditorClassIdentifier: 
-  time: 5
+  time: 1

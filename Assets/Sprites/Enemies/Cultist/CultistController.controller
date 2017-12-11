@@ -147,7 +147,7 @@ AnimatorStateTransition:
     m_EventTreshold: 22.5
   - m_ConditionMode: 3
     m_ConditionEvent: PlayerDirection
-    m_EventTreshold: 0
+    m_EventTreshold: -1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102906305745166468}
   m_Solo: 0
@@ -201,7 +201,7 @@ AnimatorStateTransition:
     m_EventTreshold: 337.5
   - m_ConditionMode: 4
     m_ConditionEvent: PlayerDirection
-    m_EventTreshold: 360
+    m_EventTreshold: 361
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102906305745166468}
   m_Solo: 0
